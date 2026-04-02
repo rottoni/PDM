@@ -1,0 +1,26 @@
+import {} from 'react-native';
+import DespesaSaida from '../components/despesa/DespesaSaida';
+
+function TodasDespesas(){
+
+    const TesteDeDespesas = [
+        {
+            id: '1',
+            descricao: 'Conta de Luz',
+            valor: 100.99,
+            data: new Date(2025,2,11)
+        },
+        {
+            id: '2',
+            descicao: 'Conta de Água',
+            valor: 40.99,
+            data: new Date(2025,4,10)
+        }
+    ]
+    
+    return (
+        <DespesaSaida despesas={TesteDeDespesas} periodo={'Total'}/>
+    )
+}
+
+export default TodasDespesas
