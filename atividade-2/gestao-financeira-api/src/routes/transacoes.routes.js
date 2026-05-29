@@ -1,9 +1,9 @@
-const { Router } = require('express');
-const { prisma } = require('../lib/prisma');
-const {
+import prisma from '../lib/prisma.js';
+import { Router } from 'express';
+import {
   criarTransacaoSchema,
   atualizarTransacaoSchema,
-} = require('../validators/schemas');
+} from '../validators/schemas.js';
 
 const router = Router();
 
@@ -103,4 +103,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,10 +1,9 @@
 import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
 
-const express = require('express');
-const cors = require('cors');
-
-const categoriasRoutes = require('./routes/categorias.routes');
-const transacoesRoutes = require('./routes/transacoes.routes');
+import categoriasRoutes from './routes/categorias.routes.js';
+import transacoesRoutes from './routes/transacoes.routes.js';
 
 const app = express();
 

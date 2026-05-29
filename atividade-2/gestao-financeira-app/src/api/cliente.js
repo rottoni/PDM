@@ -1,13 +1,13 @@
 import axios from 'axios';
+import { Platform } from 'react-native';
 
-// IMPORTANTE sobre a URL base:
-// - No navegador (expo web) e no iOS Simulator, 'http://localhost:3000' funciona.
-// - No emulador Android, use 'http://10.0.2.2:3000'.
-// - Em um celular físico, troque por 'http://SEU_IP_LOCAL:3000'
-//   (ex.: http://192.168.0.10:3000) com o celular na mesma rede Wi-Fi.
+const BASE_URL = Platform.OS === 'web'
+  ? 'http://localhost:3000'  // iOS simulator e navegador
+  : 'http://10.0.2.2:3000';  // emulador Android
+
 
 export const cliente = axios.create({
-  baseURL: 'http://10.0.2.2:3000',
+  baseURL: BASE_URL,
   timeout: 10000,
   headers: { 'Content-Type': 'application/json' },
 });

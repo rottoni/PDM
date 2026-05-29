@@ -92,7 +92,14 @@ export function TelaTransacoes() {
   }
 
   async function salvar() {
+    console.log('categoriaId:', categoriaId);
+    console.log('descricao:', descricao);
+    console.log('valor:', valor);
+    console.log('data:', data);
+
     const valorNumerico = Number(String(valor).replace(',', '.'));
+
+    console.log('valorNumerico:', valorNumerico, '| isNaN:', isNaN(valorNumerico));
 
     if (!descricao.trim() || isNaN(valorNumerico) || !data || !categoriaId) {
       Alert.alert('Atenção', 'Preencha todos os campos corretamente.');

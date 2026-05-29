@@ -1,4 +1,4 @@
-const { z } = require('zod');
+import { z } from 'zod';
 
 // Validação para criação de categoria.
 const criarCategoriaSchema = z.object({
@@ -33,7 +33,7 @@ const atualizarTransacaoSchema = z.object({
   categoryId: z.string().min(1).optional(),
 });
 
-module.exports = {
+export {
   criarCategoriaSchema,
   atualizarCategoriaSchema,
   criarTransacaoSchema,

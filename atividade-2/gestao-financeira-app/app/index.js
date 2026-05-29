@@ -1,3 +1,4 @@
+// gestao-financeira-app/app/index.js
 import React, { useState } from 'react';
 import {
   View,
@@ -8,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import { TelaPrincipal } from '../src/screens/TelaPrincipal';
 
 // Usuário de teste (conforme documentação).
 const USUARIO_VALIDO = {
@@ -16,7 +18,7 @@ const USUARIO_VALIDO = {
   nome: 'Aluno PDM',
 };
 
-export function TelaLogin({ aoEntrar }) {
+function TelaLogin({ aoEntrar }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
@@ -24,7 +26,6 @@ export function TelaLogin({ aoEntrar }) {
   function entrar() {
     setErro('');
     const emailNormalizado = email.trim().toLowerCase();
-
     if (
       emailNormalizado === USUARIO_VALIDO.email &&
       senha === USUARIO_VALIDO.senha
@@ -43,7 +44,6 @@ export function TelaLogin({ aoEntrar }) {
       <View style={styles.cartao}>
         <Text style={styles.titulo}>Gestão Financeira</Text>
         <Text style={styles.subtitulo}>Acesse sua conta</Text>
-
         <TextInput
           style={styles.input}
           placeholder="E-mail"
@@ -59,19 +59,31 @@ export function TelaLogin({ aoEntrar }) {
           value={senha}
           onChangeText={setSenha}
         />
-
         {erro ? <Text style={styles.erro}>{erro}</Text> : null}
-
         <TouchableOpacity style={styles.botao} onPress={entrar}>
           <Text style={styles.botaoTexto}>Entrar</Text>
         </TouchableOpacity>
-
-        <Text style={styles.dica}>
-          Teste: aluno@pdm.com / 123456
-        </Text>
+        <Text style={styles.dica}>Teste: aluno@pdm.com / 123456</Text>
       </View>
     </KeyboardAvoidingView>
   );
+}
+
+// ✅ Este é o componente raiz — sem props externas.
+// Ele gerencia qual tela exibir e passa as callbacks necessárias.
+export default function App() {
+  const [usuario, setUsuario] = useState(null);
+
+  if (usuario) {
+    return (
+      <TelaPrincipal
+        usuario={usuario}
+        aoSair={() => setUsuario(null)}
+      />
+    );
+  }
+
+  return <TelaLogin aoEntrar={setUsuario} />;
 }
 
 const styles = StyleSheet.create({
