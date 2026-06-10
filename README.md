@@ -1,64 +1,118 @@
-# 📱 Programação para Dispositivos Móveis (React Native)
-Repositório base destinado às aulas teóricas e às atividades práticas da disciplina. Ao longo do semestre, utilizaremos este ambiente para construir, passo a passo, um **Aplicativo de Lista de Tarefas (To-Do List)**.
+# Sobre o repositório
 
-## 🛠️ Ambiente de Desenvolvimento
-Para acompanhar a disciplina, você precisará das seguintes ferramentas:
+Esse repositório contém as aulas e práticas da disciplina de Programação de Dispositivos Móveis
 
-| Ferramenta | O que é? | Recomendação |
-| :--- | :--- | :--- |
-| **Editor de código** | Ambiente onde você escreverá seu código (JS, JSX, TSX). | [Visual Studio Code](https://code.visualstudio.com/) | 
-| **Ambiente de Execução** | Necessário para rodar o Metro Bundler e gerenciar pacotes. | [Node.js (versão LTS)](https://nodejs.org/pt-br/) |
-| **Versionador** | Controla e registra o histórico de alterações do código. | [Git](https://git-scm.com/) |
-| **Testes Físicos** | App para espelhar o código do seu computador direto no celular. | [Expo Go (Android/iOS)](https://expo.dev/go) |
 
-## 📂 Estrutura de Pastas
-Este repositório está organizado da seguinte forma:
-- **`aulas/`**: Contém os resumos teóricos e conceitos abordados em cada encontro.
-- **`praticas/`**: Contém o código das atividades práticas desenvolvidas (nosso App de Tarefas).
+# Sobre o projeto APP Gestão Financeira
 
-## 🚀 Fluxo de Trabalho Acadêmico
-As atividades seguem um fluxo de trabalho profissional baseado no modelo [GitFlow](https://www.atlassian.com/br/git/tutorials/comparing-workflows/gitflow-workflow).
+Esse é um projeto avaliativo de um aplicação full-stack funcional de gerencimento de contas
+Os arquivos desse projeto estão no diretório atividade-2
 
-### 1. Configuração Inicial (Realizar apenas uma vez)
-1. **Criar Repositório**: Clique no botão verde `Use this template`, no topo desta página, e escolha `Create a new repository` para criar a sua cópia.
-2. **Clonar Repositório**: Faça o clone do *seu* repositório para a sua máquina:
+- Backend: está contido na pasta gestao-financeira-api
+- Frontend: está contido na pasta gestao-financeira-app
+
+
+# Como rodar o APP Gestão Financeira
+
+Segue um tutorial de como rodar a aplicação
+
+
+## 1. Rodar o backend (API)
+
+Primeiramente, é necessário subir o backend
+
 ```bash
-git clone [https://github.com/SEU_USUARIO/NOME_DO_SEU_REPOSITORIO.git](https://github.com/SEU_USUARIO/NOME_DO_SEU_REPOSITORIO.git)
-```
-
-### 2.Configurar Git: Certifique-se de que seu nome e e-mail estão corretos:
-```bash
-git config --global user.name "Seu Nome"
-git config --global user.email "seu@email.com"
-```
-
-## Ciclo de Cada Prática (Repetir a cada aula)
-Para cada nova funcionalidade do nosso App, siga este fluxo:
-1. **Crie a Issue:** Acesse a aba Issues no seu GitHub, clique em New issue e use o template da prática do dia.
-2. **Crie a Branch:** A partir da branch main (ou develop), crie uma nova branch para a funcionalidade:
-```bash
-git checkout -b feature/praticaXX
-```
-3. Rode o Projeto: Acesse a pasta correspondente, instale as dependências e inicie o Expo:
-```bash
+cd atividade-2/gestao-financeira-api
 npm install
+npm run prisma:migrate
+npm run prisma:seed
+npm run dev
+```
+
+A API estará rodando em http://localhost:3000
+
+
+## 2. Validar backend com o Postman
+
+Essa etapa é apenas avaliativa, não é necessário validar o backend para rodar a aplicação
+Contanto, é interessante que verifique que os arquivos estejam funcionando como esperado
+
+1. Importe a coleção do Postman em atividade-2/gestao-financeira-api/postman/api.postman_collection.json
+2. Teste a seguintes requesições:
+
+    - 1. GET {{baseUrl}}/
+    - Resposta esperada: { "ok": true, "name": "gestao-financeira-api" }
+
+
+    - 2. GET {{baseUrl}}/categories
+    - Deve trazer as 5 categorias inseridas pelo seed.
+    - Copie o id da categoria income
+
+
+    - 3. POST {{baseUrl}}/categoriesBody:
+    ```bash
+    {
+    "name": "health",
+    "displayName": "Saúde",
+    "icon": "favorite",
+    "background": "#FFB6B6",
+    "isIncome": false
+    }
+    ```
+    - Resposta esperada: 201 Created com o objeto criado (incluindo o id gerado).
+
+
+    - 4. PUT {{baseUrl}}/categories/:id (substitua :id pelo retornado em 10.3)Body:
+    ```bash 
+    { "displayName": "Saúde e Bem-estar" }
+    ```
+
+    - 5. DELETE {{baseUrl}}/categories/:id
+    - Resposta esperada: 204 No Content.
+    - Tente excluir uma categoria padrão (ex.: income) e confirme que vem código 400.
+
+
+    - 6. POST {{baseUrl}}/transactions
+    ```bash
+    Body (use o id da categoria income capturado em 10.2):
+    {
+    "description": "Salário de outubro",
+    "value": 3500.50,
+    "date": "2026-04-29",
+    "categoryId": "COLE_AQUI_O_ID_DA_CATEGORIA"
+    }
+    ```
+    - Resposta esperada: 201 Created já com category aninhada.
+
+
+    - 7. GET {{baseUrl}}/transactions
+    - Deve listar a transação criada com a category expandida.
+
+    - 8. DELETE {{baseUrl}}/transactions/:id
+    - Resposta esperada: 204 No Content.
+
+    - 9. POST {{baseUrl}}/transactions com body inválido:
+    ```bash
+    { "description": "" }
+    ```
+    - Deve voltar 400 com "error": "Dados inválidos" e a lista de problemas em details — é o Zod barrando a entrada.
+
+
+Se todas as requesições estiverem respondendo como esperado a aplciação foi instalada corretamente
+Link contendo os prints das requesições: https://drive.google.com/drive/folders/1ig6H6_GteSYg9HZAmK7R0yCBBI5-BMpM?usp=sharing 
+
+
+## 3. Rodar o front-end
+
+Para rodar o front, é necessário continuar com o back-end funcionando
+Crie um segundo terminal e insira os seguintes comandos
+
+```bash
+cd atividade-2/gestao-financeira-app
+npm install
+npx expo install
 npx expo start
 ```
-4. Desenvolva e Teste: Escreva o código solicitado na prática e teste no seu celular usando o Expo Go.
-5. Salve e Envie (Commit & Push):
-```bash
-git add .
-git commit -m "Feat: Finaliza a implementação da Prática XX"
-git push origin feature/praticaXX
-```
-6. Solicite a Revisão (Pull Request): No GitHub, abra um Pull Request da sua branch feature/praticaXX para a branch principal.
 
-- ⚠️ Atenção!
-- Se o check ✅ não aparecer no `Pull Request`, há erros que precisam ser corrigidos antes da avaliação.
-
-## Feedback e Avaliação
-Envie o link do seu Pull Request pela plataforma de ensino. A avaliação usará o sistema de **Code Review:**
-- **Approve (Aprovado):** Código cumpre os requisitos. Faça o merge!
-- **Request Changes (Solicitação de Ajustes):** Há bugs ou melhorias necessárias. Corrija localmente, faça um novo commit e push na mesma branch, e avise no PR para nova revisão.
-
-
+O front-end será aberto na porta http://localhost:8081
+Assim, com o front-end e o back-end rodando, a aplicação estará operacional

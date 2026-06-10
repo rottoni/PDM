@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Gestão Financeira",
+    "slug": "gestao-financeira-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#F6F7FB"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.pdm.gestaofinanceira"
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-font"
+    ]
+  }
+}
